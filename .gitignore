@@ -1,0 +1,5 @@
+.idea
+*.iml
+/**/target
+generatorConfig.xml
+/**/db*.properties

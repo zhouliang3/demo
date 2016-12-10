@@ -1,4 +1,4 @@
-﻿jdbc.properties# Host: 192.168.1.215  (Version 5.6.26-log)
+﻿# Host: 192.168.1.215  (Version 5.6.26-log)
 # Date: 2016-09-19 00:32:27
 # Generator: MySQL-Front 5.3  (Build 7.5)
 

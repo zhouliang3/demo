@@ -16,7 +16,7 @@
 
 	<groupId>com.roncoo.pay.facade</groupId>
 	<artifactId>roncoo-pay-service-message-api</artifactId>
-	<version>${project.parent.version}</version>
+	<version>0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>roncoo-pay-service-message-api</name>

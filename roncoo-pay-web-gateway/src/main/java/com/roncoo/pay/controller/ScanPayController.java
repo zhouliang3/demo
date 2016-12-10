@@ -64,8 +64,6 @@ public class ScanPayController extends BaseController {
     @Autowired
     private RpUserPayConfigService rpUserPayConfigService;
 
-    @Autowired
-    private RpPayWayService rpPayWayService;
 
     /**
      * 扫码支付,预支付页面

@@ -1,0 +1,2 @@
+1.先查 base  rp_user_pay_config 商家配置是否合法,再校验签名
+
