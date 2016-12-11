@@ -160,7 +160,7 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
         	LOG.error("用户不存在");
             throw new UserBizException(UserBizException.USER_IS_NULL,"用户不存在");
         }
-        
+
         // 先判断支付订单是否已存在
         RpTradePaymentOrder rpTradePaymentOrder = rpTradePaymentOrderDao.selectByMerchantNoAndMerchantOrderNo(merchantNo, orderNo);
         if (rpTradePaymentOrder == null){
@@ -182,7 +182,7 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
         return getScanPayResultVo(rpTradePaymentOrder , payWay);
 
     }
-    
+
     /**
      * 完成扫码支付(支付宝即时到账支付，微信扫码支付)
      * @param payWayCode
@@ -209,7 +209,7 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
             LOG.info("订单{}为成功状态,不做业务处理",bankOrderNo);
             return;
         }
-        
+
         if (!TradeStatusEnum.WAITING_PAYMENT.name().equals(rpTradePaymentRecord.getStatus())){
             LOG.info("订单{}状态为非等待支付状态,不做业务处理",bankOrderNo);
             return;
@@ -249,7 +249,7 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
                 bankTrxNo = notifyMap.get("trade_no");
                 bankReturnMsg = notifyMap.toString();
             }
-            
+
         }else if (PayWayEnum.TEST_PAY_HTTP_CLIENT.name().equals(payWayCode)){
         	// 模拟网关支付
         	if (WeixinTradeStateEnum.SUCCESS.name().equals(notifyMap.get("result_code"))){//业务结果 成功
@@ -266,7 +266,7 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
         }
 
         if (orderIsSuccess){//银行返回订单支付成功
-        	
+
             LOG.info("==>开始处理支付成功的订单结果");
             RpTransactionMessage rpTransactionMessage = sealRpTransactionMessage(rpTradePaymentRecord); // 封装会计原始凭证数据
             rpTransactionMessageService.saveMessageWaitingConfirm(rpTransactionMessage);
@@ -277,10 +277,10 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
             } catch (Exception e) {
                 throw new TradeBizException(TradeBizException.TRADE_SYSTEM_ERROR,"交易系统异常,处理支付结果失败");
             }
-            
+
             rpTransactionMessageService.confirmAndSendMessage(rpTransactionMessage.getMessageId());
             LOG.info("==>修改消息状态");
-            
+
         }else{
             LOG.info("==>开始处理支付失败的订单结果");
             completeFailOrder(rpTradePaymentRecord);
@@ -535,7 +535,7 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
         rpTradePaymentOrder.setPayWayName(payWay.getPayWayName());
         rpTradePaymentOrderDao.update(rpTradePaymentOrder);
 
-        
+
         // 创建支付记录
         RpTradePaymentRecord rpTradePaymentRecord = sealRpTradePaymentRecord( rpTradePaymentOrder.getMerchantNo(),  rpTradePaymentOrder.getMerchantName() , rpTradePaymentOrder.getProductName(),  rpTradePaymentOrder.getMerchantOrderNo(),  rpTradePaymentOrder.getOrderAmount(), payWay.getPayWayCode(),  payWay.getPayWayName() ,  rpTradePaymentOrder.getFundIntoType()  , BigDecimal.valueOf(payWay.getPayRate()) ,  rpTradePaymentOrder.getOrderIp(),  rpTradePaymentOrder.getReturnUrl(),  rpTradePaymentOrder.getNotifyUrl(),  rpTradePaymentOrder.getRemark(),  rpTradePaymentOrder.getField1(),  rpTradePaymentOrder.getField2(),  rpTradePaymentOrder.getField3(),  rpTradePaymentOrder.getField4(),  rpTradePaymentOrder.getField5());
         rpTradePaymentRecordDao.insert(rpTradePaymentRecord);
@@ -661,7 +661,7 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
         return orderPayResultVo;
     }
 
-    
+
     @Override
     public OrderPayResultVo completeTestPay(String payKey, String productName, String orderNo, Date orderDate, Date orderTime, BigDecimal orderPrice, String payWayCode, String orderIp, Integer orderPeriod, String returnUrl, String notifyUrl, String remark, String field1, String field2, String field3, String field4, String field5) {
 
@@ -903,7 +903,7 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
      */
     private RpTradePaymentRecord sealRpTradePaymentRecord(String merchantNo, String merchantName ,String productName, String orderNo, BigDecimal orderPrice , String payWay , String payWayName , String fundIntoType , BigDecimal feeRate ,
                                                           String orderIp , String returnUrl, String notifyUrl, String remark, String field1, String field2, String field3, String field4, String field5){
-        
+
     	 LOG.info("sealRpTradePaymentRecord封装数据开始");
     	RpTradePaymentRecord rpTradePaymentRecord = new RpTradePaymentRecord();
         rpTradePaymentRecord.setProductName(productName);//产品名称
@@ -913,7 +913,7 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
         rpTradePaymentRecord.setTrxNo(trxNo);//支付流水号
 
         String bankOrderNo = rpTradePaymentRecordDao.buildBankOrderNo();
-        
+
         if(PayWayEnum.TEST_PAY_HTTP_CLIENT.name().equals(payWay)){//模拟httpclient支付
         	bankOrderNo = orderNo;//如果是通过httpclient模拟的支付，那么就让银行订单号与商户订单号相同，方便做处理
         }
@@ -965,7 +965,7 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
         rpTradePaymentRecord.setField3(field3);//扩展字段3
         rpTradePaymentRecord.setField4(field4);//扩展字段4
         rpTradePaymentRecord.setField5(field5);//扩展字段5
-        
+
         LOG.info("sealRpTradePaymentRecord封装数据结束");
         return rpTradePaymentRecord;
     }
@@ -1009,7 +1009,7 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
 
         return weiXinPrePay;
     }
-    
+
     /**
      * 回调通知验证签名
      * @param payWayCode
@@ -1020,7 +1020,7 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
     public void verifyNotify(String payWayCode ,Map<String, String> notifyMap) {
 
         String bankOrderNo = notifyMap.get("out_trade_no");
-        
+
         LOG.info("订单号{}",bankOrderNo);
         //根据银行订单号获取支付信息
         RpTradePaymentRecord rpTradePaymentRecord = rpTradePaymentRecordDao.getByBankOrderNo(bankOrderNo);
@@ -1050,14 +1050,14 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
         if(PayWayEnum.WEIXIN.name().equals(payWayCode)){
             String sign = notifyMap.remove("sign");
             if (WeiXinPayUtils.notifySign(notifyMap, sign, partnerKey)){//根据配置信息验证签名
-               
+
             }else{
                 throw new TradeBizException(TradeBizException.TRADE_WEIXIN_ERROR,"微信签名失败");
             }
 
         }else if (PayWayEnum.ALIPAY.name().equals(payWayCode)){
             if(AlipayNotify.verify(notifyMap)){//验证成功
-                
+
             }else{//验证失败
                 throw new TradeBizException(TradeBizException.TRADE_ALIPAY_ERROR,"支付宝签名异常");
             }

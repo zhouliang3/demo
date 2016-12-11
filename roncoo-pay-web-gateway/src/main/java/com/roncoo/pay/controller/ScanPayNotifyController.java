@@ -17,6 +17,8 @@ package com.roncoo.pay.controller;
  */
 
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -80,10 +82,10 @@ public class ScanPayNotifyController {
         }
         
         if(PayWayEnum.TEST_PAY_HTTP_CLIENT.name().equals(payWayCode)){//模拟支付，不验证签名了
-        	notifyMap.put("result_code", httpServletRequest.getParameter("result_code"));
-        	notifyMap.put("time_end", httpServletRequest.getParameter("time_end"));
-        	notifyMap.put("out_trade_no", httpServletRequest.getParameter("out_trade_no"));
-        	notifyMap.put("transaction_id", httpServletRequest.getParameter("transaction_id"));
+        	notifyMap.put("result_code", httpServletRequest.getParameter("result_code")); //结果
+        	notifyMap.put("time_end", httpServletRequest.getParameter("time_end")); //结束时间
+        	notifyMap.put("out_trade_no", httpServletRequest.getParameter("out_trade_no")); //银行订单号
+        	notifyMap.put("transaction_id", httpServletRequest.getParameter("transaction_id")); //银行流水号
         	printStr = "TEST_PAY_HTTP_CLIENT success";
         }else{
             //验证签名

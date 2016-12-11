@@ -25,6 +25,6 @@
 
 	<!-- notify -->
 	<dubbo:reference interface="com.roncoo.pay.service.notify.aip.RpNotifyService"
-		id="rpNotifyService" check="false" />
+		id="rpNotifyService"   />
 
 </beans>

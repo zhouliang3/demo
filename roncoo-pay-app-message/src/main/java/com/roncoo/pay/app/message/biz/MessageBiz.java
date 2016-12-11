@@ -46,7 +46,7 @@ public class MessageBiz {
 	/**
 	 * 处理[waiting_confirm]状态的消息
 	 * 
-	 * @param messages
+	 * @param messageMap
 	 */
 	public void handleWaitingConfirmTimeOutMessages(Map<String, RpTransactionMessage> messageMap) {
 		log.debug("开始处理[waiting_confirm]状态的消息,总条数[" + messageMap.size() + "]");
@@ -79,7 +79,7 @@ public class MessageBiz {
 	/**
 	 * 处理[SENDING]状态的消息
 	 * 
-	 * @param messages
+	 * @param messageMap
 	 */
 	public void handleSendingTimeOutMessage(Map<String, RpTransactionMessage> messageMap) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

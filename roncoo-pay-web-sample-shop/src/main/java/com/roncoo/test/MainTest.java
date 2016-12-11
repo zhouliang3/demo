@@ -99,7 +99,7 @@ public class MainTest {
      */
     private static Map<String, Object> getNotifyRequestMap(String bankOrderNo) {
         Map<String, Object> notifyMap = new HashMap<String, Object>();
-        notifyMap.put("result_code", "SUCCESS");
+        notifyMap.put("result_code", "SUCCESS"); //结果success
         String timeEnd = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
         notifyMap.put("time_end", timeEnd);
         notifyMap.put("out_trade_no", bankOrderNo);

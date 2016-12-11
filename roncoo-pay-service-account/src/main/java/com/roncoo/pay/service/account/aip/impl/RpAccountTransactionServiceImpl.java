@@ -104,6 +104,11 @@ public class RpAccountTransactionServiceImpl implements RpAccountTransactionServ
 	 *            备注
 	 */
 	@Transactional(rollbackFor = Exception.class)
+//	(rpTradePaymentRecord.getMerchantNo(),
+// rpTradePaymentRecord.getOrderAmount().subtract(rpTradePaymentRecord.getPlatIncome()),
+// rpTradePaymentRecord.getBankOrderNo(), rpTradePaymentRecord.getBankTrxNo(),
+// rpTradePaymentRecord.getTrxType(), rpTradePaymentRecord.getRemark());
+
 	public RpAccount creditToAccount(String userNo, BigDecimal amount, String requestNo, String bankTrxNo, String trxType, String remark) {
 		RpAccount account = this.getByUserNo_IsPessimist(userNo, true);
 		if (account == null) {

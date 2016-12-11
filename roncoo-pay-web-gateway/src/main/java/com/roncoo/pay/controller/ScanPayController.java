@@ -64,6 +64,7 @@ public class ScanPayController extends BaseController {
     @Autowired
     private RpUserPayConfigService rpUserPayConfigService;
 
+    private RpPayWayService rpPayWayService;
 
     /**
      * 扫码支付,预支付页面
@@ -114,7 +115,7 @@ public class ScanPayController extends BaseController {
         paramMap.put("field4",field4);
         String field5 = getString_UrlDecode_UTF8("field5"); // 扩展字段5
         paramMap.put("field5",field5);
-        
+
         LOG.info("===>initPay paramMap:" + paramMap.toString());
 
         Date orderDate = DateUtils.parseDate(orderDateStr,"yyyyMMdd");
@@ -146,7 +147,7 @@ public class ScanPayController extends BaseController {
                 return toTestPay(model ,payKey, productName, orderNo, orderDate, orderTime, orderPrice, payWayCode, orderIp, orderPeriod, returnUrl
                         , notifyUrl, remark, field1, field2, field3, field4, field5);
             }else {
-            	
+
             	// TEST_PAY_HTTP_CLIENT
                 ScanPayResultVo scanPayResultVo = rpTradePaymentManagerService.initDirectScanPay(payKey, productName, orderNo, orderDate, orderTime, orderPrice, payWayCode, orderIp, orderPeriod, returnUrl
                         , notifyUrl, remark, field1, field2, field3, field4, field5);
@@ -163,7 +164,7 @@ public class ScanPayController extends BaseController {
                 }else if(PayWayEnum.TEST_PAY_HTTP_CLIENT.name().equals(scanPayResultVo.getPayWayCode())){
                 	return "weixinPayScanPay";
                 }
-               
+
             }
         }
 
